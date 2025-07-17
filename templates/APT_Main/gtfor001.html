@@ -1,0 +1,179 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AGTI - GTFOR001</title>
+    <link rel="icon" type="image/png" href="{% static 'assets/agti logo.png' %}">
+    <link rel = "stylesheet" href = "{% static '/style/style_cad.css' %}">
+    <style>
+        input:focus{
+            background-color: rgb(209, 209, 209);
+            outline: none; 
+        }
+        .pagina-com-fundo {
+
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        min-height: 100vh;
+        padding: 20px;
+        box-sizing: border-box;
+        transition: margin-left 0.3s ease;
+        margin-left: 60px;
+        text-align: center;
+    }
+
+    #loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95); /* fundo escuro semi-transparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 5;
+    transition: opacity 0.5s ease;
+  }
+
+  /* Spinner circular */
+  .spinner {
+    border: 6px solid #f3f3f3; /* cor clara */
+    border-top: 6px solid #142e3f; /* cor do spinner */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+  }
+
+  /* Animação do spinner girando */
+  @keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+  }
+
+  /* Classe para esconder o overlay suavemente */
+  #loading-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+    .sidebar:hover ~ .pagina-com-fundo,
+    .sidebar.active ~ .pagina-com-fundo {
+        margin-left: 220px;
+    }
+        
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+   {% include 'APT_Main/partials/_sidebar.html' %}
+
+   <div class="pagina-com-fundo">
+
+        <h1 > Cadastro de Fornecedor </h1>
+        <h1 >- GTFOR001 -</h1>
+        <br>
+
+        {% if mensagem %}
+        <p style="color: green;">{{ mensagem }}</p>
+        {% endif %}
+
+        <form method="post" action="{% url 'gtfor001' %}">
+            {% csrf_token %}
+
+            <div class="item_container">
+                <div class="item_cad_cnp">
+                     {{ form.nforcod.label_tag }}
+                     {{ form.nforcod }}
+                </div>
+                <div class="item_cad">
+                    <p>{{ form.sfornam.label_tag }}<br><br>{{ form.sfornam }}</p>
+                </div>
+                <div class="item_cad">
+                    <p>{{ form.sforcnp.label_tag }}<br><br>{{ form.sforcnp }}</p>
+                </div>
+            </div>
+            
+
+            
+            <div class="botao_cadastro_container">
+                <button type="submit" class="botao_cadastro_for">Cadastrar</button>
+            </div>
+
+            {% if fornecedores %}
+                <h2 class="mt-5">Fornecedores Cadastrados</h2>
+                <table class="table table-striped table-bordered mt-3">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Código</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">CNPJ</th>
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fornecedor in fornecedores %}
+                            <tr>
+                                <td>{{ fornecedor.nforcod }}</td>
+                                <td>{{ fornecedor.sfornam }}</td>
+                                <td>{{ fornecedor.sforcnp|default:"—" }}</td>
+                                <td>
+                                    <a href="{% url 'editar_fornecedor' fornecedor.id %}" class="btn btn-sm btn-warning">Editar</a>
+                                    <a href="{% url 'excluir_fornecedor' fornecedor.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este fornecedor?');">Excluir</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <!-- Paginação -->
+                <nav>
+                    <ul class="pagination justify-content-center">
+                        {% if fornecedores.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ fornecedores.previous_page_number }}">Anterior</a>
+                            </li>
+                        {% endif %}
+                        <li class="page-item active">
+                            <span class="page-link">
+                                {{ fornecedores.number }} de {{ fornecedores.paginator.num_pages }}
+                            </span>
+                        </li>
+                        {% if fornecedores.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ fornecedores.next_page_number }}">Próxima</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+
+            {% else %}
+                <p class="mt-4">Nenhum fornecedor cadastrado ainda.</p>
+            {% endif %}
+
+        </form>
+
+       
+   </div>
+   <script>
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const overlay = document.getElementById('loading-overlay');
+      overlay.classList.add('hidden');
+      // Remove o overlay do DOM depois da transição
+      setTimeout(() => overlay.remove(), 500);
+    }, 1000); // duração 1 segundo
+  });
+</script>
+</body>

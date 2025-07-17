@@ -1,0 +1,2 @@
+# Se questionando o que é esta jabiraca de arquivo?? Ele serve para transformar o diretório criado, vulgo settings em um pacote python
+# por isso ele pode ficar em branco sem maiores impecilhos meu cumpadi

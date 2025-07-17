@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AGTI - Login</title>
+    <link rel="icon" type="image/png" href="{% static 'assets/agti logo.png' %}">
+    <link rel = "stylesheet" href = "{% static '/style/style.css' %}">
+</head>
+<body>
+    <div class="center_geral">
+        <section class= "logo">
+                <img class = "logo_login" src = "{% static '/assets/logo.png' %}">
+                <br>
+                <br>
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+
+                    {% if error %}
+                        <p style = "color: red;">{{ error }}</p>
+                    {% endif %}
+                    <input class="credenciais" name="login" placeholder="Login ou Email">
+                    <br>
+                    <input class = "credenciais" name="senha" placeholder="Senha" type="password">
+                    <br>
+                    <button type="submit" class="botao_acesso">Acessar</button>
+                </form>
+                <br>
+                <br>
+                <div class="center">
+                    <a class="cria_conta" href = "{% url 'cad_credenciais'%}"> Não tem uma conta? Clique aqui para criar!</a>
+                </div>
+        </section>
+    </div>
+    <footer class="rodape">
+        <p class="rodape_fonte">Desenvolvido por Junior Ribeiro</p>
+    </footer>
+</body>
+</html>
