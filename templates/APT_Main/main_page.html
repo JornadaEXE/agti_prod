@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AGTI - Home</title>
+    <link rel="icon" type="image/png" href="{% static 'assets/agti logo.png' %}">
+    <link rel = "stylesheet" href = "{% static '/style/style.css' %}">
+    <style>
+        input:focus{
+            background-color: rgb(209, 209, 209);
+            outline: none;
+        }
+    .pagina-com-fundo {
+        background-image: url("{% static 'assets/imagem_fundo.png' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        min-height: 100vh;
+        padding: 20px;
+        box-sizing: border-box;
+        transition: margin-left 0.3s ease;
+        margin-left: 60px;
+    }
+
+    .sidebar:hover ~ .pagina-com-fundo,
+    .sidebar.active ~ .pagina-com-fundo {
+        margin-left: 220px;
+    }
+    </style>
+</head>
+
+<body>
+ {% include 'APT_Main/partials/_sidebar.html' %}
+ <div class="pagina-com-fundo">
+       
+    </div>
+
+
+
+</body>
+
+</html>

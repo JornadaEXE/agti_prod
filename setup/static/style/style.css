@@ -1,0 +1,322 @@
+body {
+    line-height: 1;
+    background: linear-gradient(#032b2e, #044146, #07646b); 
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    font-family: 'Space Grotesk', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+.logo {
+    width: 100%;
+    margin: auto;
+    align-items: center;
+
+}
+
+.logo_login {
+    display: block;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 35%;
+
+}
+
+.credenciais {
+    display: block;
+    margin-left: auto;
+    margin-right:auto;
+    background-color: transparent;
+    height: 15px;
+    padding: 2px;
+    width: 600px;
+    color: rgb(255, 255, 255);
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom-color: white;
+}
+
+.cria_conta {
+    color: rgb(201, 201, 201);
+    text-align: center;
+}
+
+.center {
+    text-align: center;
+}
+
+.center_geral {
+  padding: 260px 0;
+  text-align: center;
+}
+
+.rodape {
+    
+    background-color: #032b2e;
+    width: 100%;
+    padding: 3px 1.1rem;
+    box-sizing: border-box;
+    display: block;
+    position: fixed;
+    justify-content: space-between;
+    color: #FFFFFF;
+    left: 0;
+    bottom: 0;
+}
+
+.rodape_fonte {
+    font-size: 15px;
+    text-align: right;
+}
+
+.rodape_info{
+    font-size: 15px;
+    text-align: left;
+}
+
+.botao_acesso{
+    background-color:  #0bc8e0;
+    height: 25px;
+    width: 75px;
+    border-radius: 15px;
+    color:#FFFFFF;
+    border:none;
+}
+
+.cadastro_principal {
+    background-color: white;
+    border-radius: 15px;
+    display: block;
+    padding: 1.5rem 1rem;
+    border:#0bc8e0;
+    width: 500px;
+    height: 500px;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: black;
+    font-family: 'Space Grotesk', sans-serif;
+
+}
+
+.form_cad_credenciais {
+    display: block;
+    margin-left: auto;
+    margin-right:auto;
+    background-color: transparent;
+    height: 15px;
+    padding: 2px;
+    width: 500px;
+    color: rgb(44, 44, 44);
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom-color: rgb(75, 75, 75)1, 30, 30;   
+}
+
+.botao_cadastro_container{
+    position: relative;
+    height: 100px;
+}
+
+.botao_cadastro{
+    margin: 0;
+    background-color:  #08343a;
+    height: 25px;
+    width: 75px;
+    border-radius: 15px;
+    color:#FFFFFF;
+    border:none;
+    top: 25%;
+    position: absolute;
+    right: 45%;  
+}
+
+.cabecalho {
+    background-color: #011618;
+    display: block;
+    padding: 15px 1.1rem;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0; /* importante para evitar qualquer espaço externo */
+}
+
+.botao_voltar {
+    width: 35px;
+}
+
+.titulo_cabecalho {
+    position: absolute;
+    text-align: center;
+    color: white;
+}
+
+.secao_cab {
+    position: relative;
+    width: auto;
+}
+
+.tags {
+    padding: 1.5rem 0;
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+    font-size: 1.3rem;
+}
+
+.tags_lista {
+    display: flex;
+}
+
+.tags__tag {
+    background-color: #D9D9D930;
+    margin-right: 1.5rem;
+    border-radius: 8px;
+    padding: .8rem .5rem;
+    width: 100px;
+    text-align: center;
+    border: 2px solid transparent;
+}
+
+
+/* Sidebar geral */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 60px; /* Colapsada */
+    height: 100vh;
+    background-color: #032b2e;
+    overflow-x: hidden;
+    transition: width 0.3s ease;
+    z-index: 100;
+}
+
+/* Expande no hover */
+.sidebar:hover {
+    width: 220px; /* Expandida */
+}
+
+/* Lista de menu */
+.sidebar_menu {
+    list-style: none;
+    margin: 0;
+    padding: 20px 0;
+}
+
+.sidebar_menu li {
+    padding: 0;
+}
+
+/* Unifica os estilos para links e botões do menu */
+.sidebar_menu a,
+.dropdown_button {
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.3s;
+    padding: 10px 20px; /* padronizado para alinhamento */
+}
+
+/* Hover geral */
+.sidebar_menu a:hover,
+.dropdown_button:hover {
+    background-color: #044146;
+}
+
+/* Ícones */
+.menu_icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.submenu_icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+
+/* Texto do menu: invisível por padrão */
+.menu_text {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    margin-left: 10px;
+}
+
+/* Mostrar texto quando sidebar expande */
+.sidebar:hover .menu_text {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Seta */
+.arrow {
+    margin-left: auto;
+    transition: transform 0.3s ease;
+    font-size: 12px;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Gira a seta quando ativo */
+.dropdown.active .arrow {
+    transform: rotate(90deg);
+}
+
+/* Dropdown colapsado por padrão */
+.dropdown_menu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background-color: #044146;
+    flex-direction: column;
+}
+
+/* Exibe menu quando ativo */
+.dropdown.active .dropdown_menu {
+    max-height: 500px; /* altura suficiente para mostrar os itens */
+}
+
+/* Itens do submenu */
+.dropdown_menu li a {
+    padding: 10px 20px; /* mesmo padding para alinhamento */
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.dropdown_menu li a:hover {
+    background-color: #05535a;
+}
+
+.pagina-com-fundo {
+    background-image: url("../static/assets/imagem_fundo.png"); /* Ajuste o caminho se necessário */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh; /* Garante que cobre a tela toda */
+    padding: 20px;
+}

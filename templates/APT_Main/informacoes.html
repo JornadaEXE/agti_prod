@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AGTI - Informações</title>
+    <link rel = "stylesheet" href = "{% static '/style/style_cad.css' %}">
+    <style>
+        input:focus{
+            background-color: rgb(209, 209, 209);
+            outline: none; 
+        }
+        .pagina-com-fundo {
+
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        min-height: 100vh;
+        padding: 20px;
+        box-sizing: border-box;
+        transition: margin-left 0.3s ease;
+        margin-left: 60px;
+        text-align: center;
+    }
+
+    #loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95); /* fundo escuro semi-transparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 5;
+    transition: opacity 0.5s ease;
+  }
+
+  /* Spinner circular */
+  .spinner {
+    border: 6px solid #f3f3f3; /* cor clara */
+    border-top: 6px solid #142e3f; /* cor do spinner */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+  }
+
+  /* Animação do spinner girando */
+  @keyframes spin {
+    0% { transform: rotate(0deg);}
+    100% { transform: rotate(360deg);}
+  }
+
+  /* Classe para esconder o overlay suavemente */
+  #loading-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+    .sidebar:hover ~ .pagina-com-fundo,
+    .sidebar.active ~ .pagina-com-fundo {
+        margin-left: 220px;
+    }
+        
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+   {% include 'APT_Main/partials/_sidebar.html' %}
+
+   <div class="pagina-com-fundo">
+
+        <h1 > Informações </h1>
+        <h3> AGTI </h3>
+        <h3> Versão do Sistema: 1.1</h3>
+        <br>
+
+        <p style="text-align: left;">------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ </p>
+        <p style="text-align: left;"><strong> Versão 1.0 </strong></p>   
+        <p style="text-align: left;">* Liberado sistema de cadastro de credenciais </p>
+        <p style="text-align: left;">* Liberado sistema de cadastro de fornecedores </p>
+        <p style="text-align: left;">* Liberado sistema de edição de fornecedores </p>
+        <p style="text-align: left;">* Liberado sistema de remoção de fornecedores </p>
+        <p style="text-align: left;">* Criada interface inicial de formulários </p>
+        <p style="text-align: left;">* Criada sidebar interativa </p>
+        <p style="text-align: left;">* Liberado sistema de cadastro de Licenças de TI </p>
+        <p style="text-align: left;"><strong>* Herobrine Removido </strong></p>
+        <p style="text-align: left;">------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ </p>
+       
+   </div>
+   <script>
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const overlay = document.getElementById('loading-overlay');
+      overlay.classList.add('hidden');
+      // Remove o overlay do DOM depois da transição
+      setTimeout(() => overlay.remove(), 500);
+    }, 1000); // duração 1 segundo
+  });
+</script>
+</body>

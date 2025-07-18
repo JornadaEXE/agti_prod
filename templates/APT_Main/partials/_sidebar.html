@@ -1,0 +1,87 @@
+{% load static %}
+
+<div class="sidebar">
+    <ul class="sidebar_menu">
+        
+        <li>
+            <a href="{% url 'main_page' %}">
+                <img src="{% static 'assets/menu.png' %}" class="menu_icon" alt="Início">
+                <span class="menu_text">Início</span>
+            </a>
+        </li>
+        <li class="dropdown">
+            <div class="dropdown_button" onclick="toggleDropdown(this)">
+                <img src="{% static 'assets/cadastro.png' %}" class="menu_icon" alt="Cadastro">
+                <span class="menu_text">Cadastro</span>
+                <span class="arrow">&#9654;</span>
+            </div>
+            <ul class="dropdown_menu">
+                <li><a href="{% url 'gtfor001' %}">Fornecedores</a></li>
+                <li><a href="{% url 'manutencao' %}">Lançamentos</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="{% url 'manutencao' %}">
+                <img src="{% static 'assets/usuario.png' %}" class="menu_icon" alt="Início">
+                <span class="menu_text">Usuários</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'manutencao' %}">
+                <img src="{% static 'assets/livro.png' %}" class="menu_icon" alt="Início">
+                <span class="menu_text">Procedimentos</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'manutencao' %}">
+                <img src="{% static 'assets/configuracao.png' %}" class="menu_icon" alt="Início">
+                <span class="menu_text">Configurações</span>
+            </a>
+        </li>
+            <li class="dropdown">
+        <div class="dropdown_button">
+            <img src="{% static 'assets/infra.png' %}" class="menu_icon">
+            <span class="menu_text">Infra</span>
+            <span class="arrow">&#9654;</span>
+        </div>
+        <ul class="dropdown_menu">
+            <li><a href="{% url 'inlic001'%}">Licenças</a></li>
+            <li><a href="{% url 'manutencao' %}">Setores</a></li>
+        </ul>
+    </li>
+    <li>
+            <a href="https://app.powerbi.com/groups/7e2a5b71-3c1d-461c-9e8e-62fa7d18912b/list?experience=power-bi">
+                <img src="{% static 'assets/powerbi.png' %}" class="menu_icon" alt="Sair">
+                <span class="menu_text">Power BI</span>
+            </a>
+        </li>
+    <li>
+            <a href="{% url 'informacoes' %}">
+                <img src="{% static 'assets/info.png' %}" class="menu_icon" alt="Sair">
+                <span class="menu_text">Informações Gerais</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'login' %}">
+                <img src="{% static 'assets/sair.png' %}" class="menu_icon" alt="Sair">
+                <span class="menu_text">Sair</span>
+            </a>
+        </li>
+        
+    </ul>
+    <p style="font-size: 8; text-align: center; color: white;">Ver. 1.1</p>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const dropdownButtons = document.querySelectorAll('.dropdown_button');
+
+        dropdownButtons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                e.stopPropagation(); // Impede propagação para dropdowns pais
+                const parentDropdown = this.closest('.dropdown');
+                parentDropdown.classList.toggle('active');
+            });
+        });
+    });
+</script>

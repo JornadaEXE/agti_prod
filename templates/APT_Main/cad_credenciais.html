@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AGTI - Cadastro</title>
+    <link rel="icon" type="image/png" href="{% static 'assets/agti logo.png' %}">
+    <link rel = "stylesheet" href = "{% static '/style/style.css' %}">
+    <style>
+        input:focus{
+            background-color: rgb(209, 209, 209);
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="secao_cab">
+        <header class="cabecalho">
+            <a href="{% url 'login' %}">
+                <img class="botao_voltar" src="{% static 'assets/Voltar.png'%}">
+            </a>
+        </header>
+    </section>
+    <br>
+    <section class="cadastro_principal">
+        <form method="post" action="{% url 'cadastro' %}">
+    {% csrf_token %}
+
+    <p>{{ form.susrnam.label_tag }}<br><br>{{ form.susrnam }}</p>
+    <p>{{ form.susrset.label_tag }}<br><br>{{ form.susrset }}</p>
+    <p>{{ form.susrlog.label_tag }}<br><br>{{ form.susrlog }}</p>
+    <p>{{ form.susrsen.label_tag }}<br><br>{{ form.susrsen }}</p>
+    <p>{{ form.senha_confirma.label_tag }}<br><br>{{ form.senha_confirma }}</p>
+
+    {% if form.errors %}
+        <ul style="color: red;">
+        {% for field in form %}
+            {% for error in field.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="botao_cadastro_container">
+        <button type="submit" class="botao_cadastro">Cadastrar</button>
+    </div>
+</form>
+
+    </section>
+
+    <footer class="rodape">
+        <p class="rodape_fonte">Desenvolvido por Junior Ribeiro</p>
+    </footer>
+
+</body>
