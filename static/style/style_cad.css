@@ -328,13 +328,14 @@ html {
 
 .item_form {
     text-align: left;
-    display: block;
-    width: 25px;
+    display: flex;
     background-color: transparent;
+    width: 95%;
     border-right: none;
     border-left: none;
     border-top: none;
     margin: 0;
+    margin-right: 3px;
     padding: 0 5px;
 
 }
@@ -429,7 +430,7 @@ label {
 
 .alinha_form{
     text-align: left;
-    width: 800px;
+    width: 100%;
 }
 
 .alinha_titulo{
@@ -466,6 +467,45 @@ label {
 
 .div_caixa {
     display: flex;
-    background-color: #1de00b;
-    height: 25px;
+    background-color: transparent;
+    height: 100px;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.div_caixa p {
+    flex: 1;
+    max-width: 25%;
+    margin: 0;
+    border-right: 1px;
+}
+
+.div_sub_caixa {
+    display: flex;
+    background-color: #072225;
+    height: 50px;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.div_sub_caixa p {
+    flex: 1;
+    font-size: 40px;
+    margin: 0;
+    border-right: 1px;
+    color: white;
+    padding: 15px;
+    margin: 3px;
+}
+
+.div_cab_form  {
+    display: flex;
+    background-color: #072225;
+    height: 50px;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
 }

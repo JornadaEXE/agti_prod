@@ -35,7 +35,7 @@ ROOT_URLCONF = 'setup.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['C:/JRP/templates'],
+        'DIRS': ['C:/JRP_Desenvolvimento/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
