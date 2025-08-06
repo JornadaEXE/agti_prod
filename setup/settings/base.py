@@ -9,7 +9,7 @@ SECRET_KEY = 'DUMMY_KEY'  # será sobrescrito em dev/prod
 
 DEBUG = False  # será sobrescrito
 
-ALLOWED_HOSTS = []  # será sobrescrito
+ALLOWED_HOSTS = ['192.168.0.25', 'agtimaxi.local', '127.0.0.1']  # será sobrescrito
 
 INSTALLED_APPS = [
     'django.contrib.admin',

@@ -1,7 +1,7 @@
 from .base import *
 
 DEBUG = False
-ALLOWED_HOSTS = ['meusite.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['192.168.0.25', 'agtimaxi.local', '127.0.0.1']
 
 DATABASES = {
     'default': {
