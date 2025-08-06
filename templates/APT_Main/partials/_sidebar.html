@@ -17,11 +17,11 @@
             </div>
             <ul class="dropdown_menu">
                 <li><a href="{% url 'gtfor001' %}">Fornecedores</a></li>
-                <li><a href="{% url 'manutencao' %}">Lançamentos</a></li>
+                <li><a href="{% url 'lancamento_contrato' %}">Lançamentos</a></li>
             </ul>
         </li>
         <li>
-            <a href="{% url 'manutencao' %}">
+            <a href="{% url 'cadastro' %}">
                 <img src="{% static 'assets/usuario.png' %}" class="menu_icon" alt="Início">
                 <span class="menu_text">Usuários</span>
             </a>
@@ -38,6 +38,17 @@
                 <span class="menu_text">Configurações</span>
             </a>
         </li>
+           <li class="dropdown">
+        <div class="dropdown_button">
+            <img src="{% static 'assets/ico_equipamento.png' %}" class="menu_icon">
+            <span class="menu_text">Equipamentos</span>
+            <span class="arrow">&#9654;</span>
+        </div>
+        <ul class="dropdown_menu">
+            <li><a href="{% url 'cad_tip'%}">Cad. de Tipos</a></li>
+            <li><a href="{% url 'cad_equipamento'%}">Cad. de Equipamentos</a></li>
+        </ul>
+    </li>
             <li class="dropdown">
         <div class="dropdown_button">
             <img src="{% static 'assets/infra.png' %}" class="menu_icon">
@@ -46,7 +57,8 @@
         </div>
         <ul class="dropdown_menu">
             <li><a href="{% url 'inlic001'%}">Licenças</a></li>
-            <li><a href="{% url 'manutencao' %}">Setores</a></li>
+            <li><a href="{% url 'cad_setores' %}">Setores</a></li>
+            <li><a href="{% url 'end_eqp' %}">Equipamentos & IP's</a></li>
         </ul>
     </li>
     <li>
@@ -69,7 +81,7 @@
         </li>
         
     </ul>
-    <p style="font-size: 8; text-align: center; color: white;">Ver. 1.1</p>
+    <p style="font-size: 8; text-align: center; color: white;">Ver. 1.2</p>
 </div>
 
 <script>
