@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, JsonResponse
-from .forms import CredencialForm, FornecedorForm, LicencaForm
-from .models import t001log, t010for, t100lic, JsonResponseMaxi
+from .forms import CredencialForm, FornecedorForm, LicencaForm, CadastroUserForm, LancamentoForm, EndEqpForm, CadTipForm, CadEqpForm, CadSetForm
+from .models import t001log, t010for, t100lic, JsonResponseMaxi, t200ipc, t002set, t003tip, t004eqp
 from django.contrib.auth.hashers import make_password, check_password
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from django.contrib import messages
 
 # Create your views here.
 
@@ -15,10 +19,11 @@ def index(request):
 def cad_credenciais(request):
     return redirect('cadastro')
 
+@login_required
 def main_page(request):
     return render(request, 'APT_Main/main_page.html')
 
-def login(request):
+def login_old(request):
     if request.method == 'POST':
         login_input = request.POST.get('login')
         senha_input = request.POST.get('senha')
@@ -167,3 +172,105 @@ def excluir_licenca(request, id):
     licenca = get_object_or_404(t100lic, id=id)
     licenca.delete()
     return redirect('inlic001')
+
+@login_required
+def log_sec(request):
+    return render(request, 'APT_Main/login.html')
+
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('main_page')  # Substitua pelo nome da sua página inicial
+        else:
+            return render(request, 'APT_Main/login.html', {'error': 'Usuário ou senha inválidos'})
+
+    return render(request, 'APT_Main/login.html')
+
+def cadastro_view(request):
+    if request.method == 'POST':
+        form = CadastroUserForm(request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(
+                username=form.cleaned_data['username'],
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['senha']
+            )
+            return redirect('login')
+    else:
+        form = CadastroUserForm()
+
+    usuarios = User.objects.all()
+    
+    return render(request, 'APT_Main/cadastro.html', {'form': form, 'usuarios': usuarios})
+
+def red_login(request):
+    return render(request, 'APT_Main/login.html')
+
+def lancamento_contrato(request):
+    if request.method == 'POST':
+        form = LancamentoForm(request.POST)
+        if form.is_valid():
+            instancia = form.save()
+            form = LancamentoForm()
+    else:
+        form = LancamentoForm()
+
+    return render(request, 'APT_Main/gtlan001.html', {'form': form})
+
+def cad_endip(request):
+    if request.method == 'POST':
+        form = EndEqpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('end_eqp')
+    else:
+        form = EndEqpForm()
+    
+    registros = t200ipc.objects.all()
+
+    return render(request, 'APT_Main/inend001.html', {'form': form, 'registros' : registros})
+
+def cad_tipo(request):
+    if request.method == 'POST':
+        form = CadTipForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('cad_tip')
+    else:
+        form = CadTipForm()
+
+    registros = t003tip.objects.all()
+
+    return render(request, 'APT_Main/ceqp001.html', {'form' : form, 'registros' : registros})
+
+def cad_equipamento(request):
+    if request.method == 'POST':
+        form = CadEqpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('cad_equipamento')
+    else:
+        form = CadEqpForm()
+
+    registros = t004eqp.objects.all()
+
+    return render(request, 'APT_Main/ceqp002.html', {'form' : form, 'registros' : registros})
+
+def cad_setores(request):
+    if request.method == 'POST':
+        form = CadSetForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('cad_setores')
+    else:
+        form = CadSetForm()
+
+    registros = t002set.objects.all()
+
+    return render(request, 'APT_Main/cinfo001.html', {'form' : form, 'registros' : registros})

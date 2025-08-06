@@ -14,6 +14,45 @@ class t001log(models.Model):
         db_table = 't001log'
         db_table_comment = 'Login HomePage'
 
+class t002set(models.Model):
+
+    scodset = models.CharField(max_length=5, verbose_name="SCodSet", help_text="Abrev. Setor")
+    ssetnam = models.CharField(max_length=50, verbose_name="SSetNam", help_text="Nome do Setor")
+
+    class Meta:
+        db_table = 't002set'
+        db_table_comment = 'Setores'
+
+    def __str__(self):
+        return self.ssetnam
+
+class t003tip(models.Model):
+
+    scodtip = models.CharField(max_length=5, verbose_name="SCodTip", help_text="Abrev. Tipo")
+    stipnam = models.CharField(max_length=50, verbose_name="STipNam", help_text="Nome do Tipo")
+
+    class Meta:
+        db_table = 't003tip'
+        db_table_comment = 'Tipos de Equipamentos'
+    
+    def __str__(self):
+        return self.stipnam
+
+class t004eqp(models.Model):
+
+    scodeqp = models.IntegerField(verbose_name="SCodEqp", help_text="Código Equipamento")
+    seqpnam = models.CharField(max_length=50, verbose_name="SEqpNam", help_text="Nome do Equipamento")
+
+    class Meta:
+        db_table = 't004eqp'
+        db_table_comment = 'Equipamentos'
+
+    def __str__(self):
+        return self.seqpnam
+
+
+
+
 class t010for(models.Model):
     nforcod = models.IntegerField(verbose_name='NForCod', help_text='Codigo do Fornecedor')
     sfornam = models.CharField(max_length=100, verbose_name='SForNam', help_text='Nome do Fornecedor')
@@ -47,3 +86,34 @@ class JsonResponseMaxi(models.Model):
     nome = models.CharField(max_length=100)
     payload = models.JSONField()
     criado_em = models.DateTimeField(auto_now_add=True)
+
+class t011lan(models.Model):
+    nfilcod = models.IntegerField(verbose_name="NFilCod", help_text="Código da Filial", blank=False, null=False)
+    ncnpfor = models.IntegerField(verbose_name="NCnpFor", help_text="CNPJ do fornecedor", blank=False, null=False)
+    snomfor = models.CharField(max_length=100, verbose_name="SNomFor", help_text="Nomde do Fornecedor")
+    ddatemi = models.DateField(max_length=100, verbose_name="DDatEmi", help_text="Data de Emissão")
+    ddatven = models.DateField(max_length=100, verbose_name="DDatVen", help_text="Data de Vencimento")
+    nvlrlan = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="NVlrLan", help_text="Valor do Lançamento")
+    ncodsol = models.IntegerField(verbose_name="NCodSol", help_text="Código de Solicitação do ERP")
+    ncodcon = models.IntegerField(verbose_name="NCodCon", help_text="Código do Contrato")
+    ncodtra = models.IntegerField(verbose_name="NCodTra", help_text="Transação")
+    scodccu = models.CharField(max_length=9, verbose_name="SCodCcu", help_text="Centro de Custo")
+    sobslan = models.TextField(max_length=1000, verbose_name="SObsLan", help_text="Observação")
+
+    class Meta:
+        db_table = 't011lan'
+        db_table_comment = 'Lançamentos de Contratos'
+
+
+class t200ipc(models.Model):
+    ssrvtag = models.CharField(max_length=50, verbose_name="SSrvTag", help_text="Identificador do equipamento")
+    snomset = models.CharField(max_length=100, verbose_name="SNomSet", help_text="Setor do Equipamento")
+    stipeqp = models.CharField(max_length=100, verbose_name="STipEqp", help_text="Tipo do Equipamento")
+    sipeend = models.CharField(max_length=50, verbose_name="SIpeEnd", help_text="Endereço IP do Equipamento")
+    smacend = models.CharField(max_length=100, verbose_name="SMacEnd", help_text="Endereço Mac do Equipamento")
+    smodeqp = models.CharField(max_length=50, verbose_name="SModEqp", help_text="Modelo do Equipamento")
+    sstteqp = models.CharField(max_length=5, verbose_name="SSttEqp", help_text="Status de Conexão")
+
+    class Meta:
+        db_table = 't200ipc'
+        db_table_comment = 'Controle de Equipamentos por IP'

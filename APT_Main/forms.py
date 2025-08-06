@@ -1,8 +1,9 @@
 from django import forms
-from .models import t001log, t010for, t100lic
+from .models import t001log, t010for, t100lic, t011lan, t200ipc, t002set, t003tip, t004eqp
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 from django.db.models import Max
+from django.contrib.auth.models import User
 
 SETOR_CHOICES = [
     ('TI', 'Tecnologia da Informação'),
@@ -104,35 +105,38 @@ class LicencaForm(forms.ModelForm):
             self.fields['ncodlic'].initial = ultimo_codigo + 1
 
         placeholders = {
-            'ncodlic': 'Digite o código da licença',
-            'snomlic': 'Digite o nome da licença',
-            'ssigite': 'Digite a sigla da licença',
-            'ssetlic': 'Digite o setor',
-            'ddatini': 'DD/MM/AAAA',
-            'ddatfin': 'DD/MM/AAAA',
-            'fdurlic': 'Duração em dias (Automatico)',
-            'ssernum': 'Serial Number',
+        #    'ncodlic': 'Digite o código da licença',
+        #    'snomlic': 'Digite o nome da licença',
+        #    'ssigite': 'Digite a sigla da licença',
+        #    'ssetlic': 'Digite o setor',
+        #    'ddatini': 'DD/MM/AAAA',
+        #    'ddatfin': 'DD/MM/AAAA',
+        #    'fdurlic': 'Duração em dias (Automatico)',
+        #    'ssernum': 'Serial Number',
             'slinsit': 'www.exemplo.com',
-            'susrcre': 'Usuário',
-            'ssencre': 'Senha',
-            'ssetres': 'Setor responsável',
-            'sobsadi': 'Observações',
-            'ssitlic': 'Ativa/Inativa/etc.',
+        #    'susrcre': 'Usuário',
+        #    'ssencre': 'Senha',
+        #    'ssetres': 'Setor responsável',
+        #    'sobsadi': 'Observações',
+        #    'ssitlic': 'Ativa/Inativa/etc.',
         }
 
 
         for name, field in self.fields.items():
             classes = field.widget.attrs.get('class', '')
-            if name in ['ddatini', 'ddatfin']:
-                field.widget.attrs['class'] = f"{classes} item_campo_pequeno"
-                field.widget.input_type = 'date'
-            elif name in ['ncodlic']:
-                field.widget.attrs['class'] = f"{classes} item_codigo" 
+            if name in ['ncodlic', 'snomlic', 'ssitlic']:
+                    field.widget.attrs['class'] = f"{classes} item_codigo"
             else:
-                field.widget.attrs['class'] = f"{classes} item_form"
+                if name in ['ddatini', 'ddatfin']:
+                    field.widget.attrs['class'] = f"{classes} item_campo_pequeno"
+                    field.widget.input_type = 'date'
+                elif name in ['sobsadi']:
+                    field.widget.attrs['class'] = f"{classes} csf5" 
+                else:
+                    field.widget.attrs['class'] = f"{classes} fcp1"
 
-            if name in placeholders:
-                field.widget.attrs['placeholder'] = placeholders[name]
+                if name in placeholders:
+                    field.widget.attrs['placeholder'] = placeholders[name]
 
     class Meta:
         model = t100lic
@@ -142,21 +146,149 @@ class LicencaForm(forms.ModelForm):
             'sobsadi', 'ssitlic'
         ]
         labels = {
-            'ncodlic': 'Código da Licença',
-            'snomlic': 'Nome da Licença',
-            'ssigite': 'Sigla da Licença',
-            'ssetlic': 'Setor da Licença',
-            'ddatini': 'Data de Início da Licença',
-            'ddatfin': 'Data de Fim da Licença',
-            'fdurlic': 'Duração (Dias)',
-            'ssernum': 'Serial Number da Licença',
-            'slinsit': 'Site da Licença',
-            'susrcre': 'Credencial de Acesso',
-            'ssencre': 'Senha de Acesso',
-            'ssetres': 'Setor Responsável pela Renovação',
-            'sobsadi': 'Observação Adicional',
-            'ssitlic': 'Situação da Licença',
+            'ncodlic': 'Código',
+            'snomlic': 'Nome',
+            'ssigite': 'Sigla',
+            'ssetlic': 'Setor',
+            'ddatini': 'Data Inicial',
+            'ddatfin': 'Data Final',
+            'fdurlic': 'Duração',
+            'ssernum': 'Serial Number',
+            'slinsit': 'Site',
+            'susrcre': 'Usuário',
+            'ssencre': 'Senha',
+            'ssetres': 'Setor Responsável',
+            'sobsadi': 'Observação',
+            'ssitlic': 'Status',
         }
         widgets = {
             'sobsadi': forms.Textarea(attrs={'rows': 4, 'cols': 40, 'class': 'item_form'}),
         }
+
+class LancamentoForm(forms.ModelForm):
+
+    def __init__(self, *args, **kargs):
+        super().__init__(*args, **kargs)
+    
+        for name, field in self.fields.items():
+            classes = field.widget.attrs.get('class', '')
+            field.widget.attrs['class'] = f"{classes} item_codigo"
+
+    class Meta:
+        model = t011lan
+        fields = ['nfilcod', 'ncnpfor', 'snomfor', 'ddatemi', 'ddatven', 'nvlrlan',
+                  'ncodsol', 'ncodcon', 'ncodtra', 'scodccu', 'sobslan']
+
+class CadastroUserForm(forms.ModelForm):
+    senha = forms.CharField(widget=forms.PasswordInput)
+    senha_confirma = forms.CharField(widget=forms.PasswordInput)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for name, field in self.fields.items():
+            classes = field.widget.attrs.get('class', '')
+            field.widget.attrs['class'] = f"{classes} itc1"
+
+    class Meta:
+        model = User
+        fields = ['username', 'email']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        senha = cleaned_data.get('senha')
+        senha_confirma = cleaned_data.get('senha_confirma')
+
+        if senha and senha_confirma and senha != senha_confirma:
+            raise ValidationError('As senhas não coincidem.')
+        
+        return cleaned_data
+    
+class EndEqpForm(forms.ModelForm):
+
+    stipeqp = forms.ModelChoiceField(
+        queryset=t003tip.objects.all(),
+        empty_label="Selecione um Tipo",
+        to_field_name="scodtip"
+    )
+
+    snomset = forms.ModelChoiceField(
+        queryset=t002set.objects.all(),
+        empty_label="Selecione um Setor",
+        to_field_name="ssetnam"
+    )
+
+    smodeqp = forms.ModelChoiceField(
+        queryset=t004eqp.objects.all(),
+        empty_label="Selecione um Equipamento",
+        to_field_name="seqpnam"
+    )
+
+
+
+    def __init__(self, *args, **kargs):
+        super().__init__(*args, **kargs)
+    
+        for name, field in self.fields.items():
+            classes = field.widget.attrs.get('class', '')
+            field.widget.attrs['class'] = f"{classes} cforend1"
+
+            help_text = self._meta.model._meta.get_field(name).help_text
+            if help_text:
+                field.label = help_text
+
+    class Meta:
+        model = t200ipc
+        fields = '__all__'
+
+class CadTipForm(forms.ModelForm):
+
+    def __init__(self, *args, **kargs):
+        super().__init__(*args, **kargs)
+    
+        for name, field in self.fields.items():
+            classes = field.widget.attrs.get('class', '')
+            field.widget.attrs['class'] = f"{classes} cforend1"
+
+            help_text = self._meta.model._meta.get_field(name).help_text
+            if help_text:
+                field.label = help_text
+
+    class Meta:
+        model = t003tip
+        fields = '__all__'
+
+class CadEqpForm(forms.ModelForm):
+
+    def __init__(self, *args, **kargs):
+        super().__init__(*args, **kargs)
+    
+        for name, field in self.fields.items():
+            classes = field.widget.attrs.get('class', '')
+            field.widget.attrs['class'] = f"{classes} cforend1"
+
+            help_text = self._meta.model._meta.get_field(name).help_text
+            if help_text:
+                field.label = help_text
+
+    class Meta:
+        model = t004eqp
+        fields = '__all__'
+
+class CadSetForm(forms.ModelForm):
+
+    def __init__(self, *args, **kargs):
+        super().__init__(*args, **kargs)
+    
+        for name, field in self.fields.items():
+            classes = field.widget.attrs.get('class', '')
+            field.widget.attrs['class'] = f"{classes} cforend1"
+
+            help_text = self._meta.model._meta.get_field(name).help_text
+            if help_text:
+                field.label = help_text
+
+    class Meta:
+        model = t002set
+        fields = '__all__'
+
+
