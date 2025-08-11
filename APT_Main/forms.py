@@ -1,5 +1,5 @@
 from django import forms
-from .models import t001log, t010for, t100lic, t011lan, t200ipc, t002set, t003tip, t004eqp
+from .models import t001log, t010for, t100lic, t011lan, t200ipc, t002set, t003tip, t004eqp, t300med
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 from django.db.models import Max
@@ -89,8 +89,16 @@ class FornecedorForm(forms.ModelForm):
 
 class LicencaForm(forms.ModelForm):
 
-    ssetlic = forms.ChoiceField(choices=SETOR_CHOICES, label='Setor')
-    ssetres = forms.ChoiceField(choices=SETOR_CHOICES, label='Setor Responsável')
+    ssetlic = forms.ModelChoiceField(
+        queryset=t002set.objects.all(),
+        empty_label="Selecione um Setor",
+        to_field_name="ssetnam"
+    )
+    ssetres = forms.ModelChoiceField(
+        queryset=t002set.objects.all(),
+        empty_label="Selecione um Setor",
+        to_field_name="ssetnam"
+    )
     ssitlic = forms.ChoiceField(choices=STATUS_CHOICES, label='Status')
 
 
@@ -289,6 +297,23 @@ class CadSetForm(forms.ModelForm):
 
     class Meta:
         model = t002set
+        fields = '__all__'
+
+class CadMetCov(forms.ModelForm):
+
+    def __init__(self, *args, **kargs):
+        super().__init__(*args, **kargs)
+    
+        for name, field in self.fields.items():
+            classes = field.widget.attrs.get('class', '')
+            field.widget.attrs['class'] = f"{classes} cforend1"
+
+            help_text = self._meta.model._meta.get_field(name).help_text
+            if help_text:
+                field.label = help_text
+
+    class Meta:
+        model = t300med
         fields = '__all__'
 
 

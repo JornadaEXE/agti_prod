@@ -8,4 +8,3 @@ static/
 db.sqlite3
 *.bat
 *.sh
-settings/__pycache__

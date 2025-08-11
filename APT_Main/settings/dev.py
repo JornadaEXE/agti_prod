@@ -1,12 +1,16 @@
 from .base import *
 
-DEBUG = True
-ALLOWED_HOSTS = ['192.168.0.25', 'agtimaxi.local','127.0.0.1']
+DEBUG = False
+ALLOWED_HOSTS = ['192.168.0.25', 'localhost', '127.0.0.1']
 
-# Banco SQLite local
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'db_main',
+        'USER': 'root',
+        'PASSWORD': 'ti@118',
+        'HOST': '127.0.0.1',
+        'PORT': '3306'
     }
 }
+STATIC_ROOT = BASE_DIR / 'staticfiles'

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, JsonResponse
-from .forms import CredencialForm, FornecedorForm, LicencaForm, CadastroUserForm, LancamentoForm, EndEqpForm, CadTipForm, CadEqpForm, CadSetForm
-from .models import t001log, t010for, t100lic, JsonResponseMaxi, t200ipc, t002set, t003tip, t004eqp
+from .forms import CredencialForm, FornecedorForm, LicencaForm, CadastroUserForm, LancamentoForm, EndEqpForm, CadTipForm, CadEqpForm, CadSetForm, CadMetCov
+from .models import t001log, t010for, t100lic, JsonResponseMaxi, t200ipc, t002set, t003tip, t004eqp, t300med
 from django.contrib.auth.hashers import make_password, check_password
 from django.db.models import Q
 from django.core.paginator import Paginator
@@ -274,3 +274,16 @@ def cad_setores(request):
     registros = t002set.objects.all()
 
     return render(request, 'APT_Main/cinfo001.html', {'form' : form, 'registros' : registros})
+
+def cad_conversao(request):
+    if request.method == 'POST':
+        form = CadMetCov(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('cad_setores')
+    else:
+        form = CadMetCov()
+
+    registros = t300med.objects.all()
+
+    return render(request, 'APT_Main/cdoc001.html', {'form' : form, 'registros' : registros})

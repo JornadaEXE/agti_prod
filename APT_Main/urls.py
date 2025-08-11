@@ -25,5 +25,7 @@ urlpatterns = [
     path('inend001/', views.cad_endip, name='end_eqp'),
     path('ceqp001/', views.cad_tipo, name='cad_tip'),
     path('ceqp002/', views.cad_equipamento, name='cad_equipamento'),
-    path('cinfo001', views.cad_setores, name='cad_setores')
+    path('cinfo001', views.cad_setores, name='cad_setores'),
+    path('cdoc001/', views.cad_conversao, name='cad_convercao'),
+
 ]

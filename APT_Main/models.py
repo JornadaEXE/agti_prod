@@ -70,13 +70,13 @@ class t100lic(models.Model):
     ddatini = models.DateField(verbose_name="DDatIni", help_text="Data de Inicio da Licença")
     ddatfin = models.DateField(verbose_name="DDatFin", help_text="Data de Fim da Licença")
     fdurlic = models.FloatField(verbose_name="FDurLic", help_text="Duração da Licença")
-    ssernum = models.CharField(max_length=200, verbose_name="SSerNum", help_text="Serial Number da Licença")
-    slinsit = models.CharField(max_length=500, verbose_name="SLinSit", help_text="Site da Licença")
-    susrcre = models.CharField(max_length=100, verbose_name="SUsrCre", help_text="Credencial de acesso")
-    ssencre = models.CharField(max_length=100, verbose_name="SSenCre", help_text="Senha de acesso")
-    ssetres = models.CharField(max_length=100, verbose_name="SSetRes", help_text="Setor responsavel pela renovação")
-    sobsadi = models.TextField(max_length=1000, verbose_name="SObsAdi", help_text="Observação Adicional")
-    ssitlic = models.CharField(max_length=20, verbose_name="SSitLic", help_text="Situação da Licença")
+    ssernum = models.CharField(max_length=200, verbose_name="SSerNum", help_text="Serial Number da Licença", blank=True)
+    slinsit = models.CharField(max_length=500, verbose_name="SLinSit", help_text="Site da Licença", blank=True)
+    susrcre = models.CharField(max_length=100, verbose_name="SUsrCre", help_text="Credencial de acesso", blank=True)
+    ssencre = models.CharField(max_length=100, verbose_name="SSenCre", help_text="Senha de acesso", blank=True)
+    ssetres = models.CharField(max_length=100, verbose_name="SSetRes", help_text="Setor responsavel pela renovação", blank=True)
+    sobsadi = models.TextField(max_length=1000, verbose_name="SObsAdi", help_text="Observação Adicional", blank=True)
+    ssitlic = models.CharField(max_length=20, verbose_name="SSitLic", help_text="Situação da Licença", blank=True)
 
     class Meta:
         db_table = 't100lic'
@@ -117,3 +117,12 @@ class t200ipc(models.Model):
     class Meta:
         db_table = 't200ipc'
         db_table_comment = 'Controle de Equipamentos por IP'
+
+class t300med(models.Model):
+    ncoduni = models.IntegerField(verbose_name="NCodUni", help_text="Código Único")
+    sabrcon = models.CharField(max_length=20, verbose_name="SAbrCon", help_text="Abreviatura da Conversão")
+    sdescon = models.CharField(max_length=200, verbose_name="SDesCon", help_text="Descrição da Conversão")
+
+    class Meta:
+        db_table = 't300med'
+        db_table_comment = 'Métodos de Conversão de Medidas'
